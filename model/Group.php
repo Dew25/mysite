@@ -7,29 +7,33 @@ class Group{
     private $endYear;
     private $beginMonth;
     private $endMonth;
+    private $step;
 
     /**
-     *  Считывает состояние из таблицы group или записывает в нее строку.
+     *  Считывает состояние из таблицы group или записывает, изменяет или удаляет строку таблицы.
      *
-     * @param array $args  содержит id строки в таблице, которыую необходимо затронуть, или значения полей таблицы в следующем порядке: `abbreviation`, `groupname`, `begin_year`, `end_year`, `begin_month`, `end_month`..
+     * @param array $args  содержит id строки в таблице, которыую необходимо затронуть, или значения полей таблицы в следующем порядке: abbreviation, groupname, begin_year, end_year, begin_month, end_month, id.
      * @param string $flag  содержит строку-флаг, который определяет действие (READ,INSERT,UPDATE,DELETE)
      */
-    public function Group($args,$flag)
+    public function __construct($args,$flag)
     {
+
         switch ($flag) {
             case 'READ':{
-                $sql="SELECT * FROM `group` WHERE id = ?";
-                $stmt = ConnDB::getDbh()->prepare($sql);
-                $stmt->execute(["$id"]);//выполняем запрос с подстановкой значения переменной $id в ?
+                $sql="SELECT `id`, `abbreviation`, `groupname`, `begin_year`, `end_year`, `begin_month`, `end_month` FROM `group` WHERE id=?";
+                $dbh = ConnDB::getDbh();
+                $stmt=$dbh->prepare($sql);
+                $stmt->execute(["$args"]);//выполняем запрос с подстановкой значения переменной $id в ?
                 $row = $stmt->fetch();// записываем выборку в массив php
                 // инициируем состояние класса Group
                 $this->setId($row["id"]);
                 $this->setAbbreviation($row["abbreviation"]);
-                $this->setGroupName($row["groupName"]);
-                $this->setBeginYear($row["beginYear"]);
-                $this->setEndYear($row["endYear"]);
-                $this->setBeginMonth($row["beginMonth"]);
-                $this->setEndMonth($row["endMonth"]);
+                $this->setGroupName($row["groupname"]);
+                $this->setBeginYear($row["begin_year"]);
+                $this->setEndYear($row["end_year"]);
+                $this->setBeginMonth($row["begin_month"]);
+                $this->setEndMonth($row["end_month"]);
+                $this->setStep();
                 break;}
             case 'INSERT':{
                 $sql="INSERT INTO `group`(`abbreviation`, `groupname`, `begin_year`, `end_year`, `begin_month`, `end_month`) VALUES (?,?,?,?,?,?)";
@@ -83,38 +87,57 @@ class Group{
     {
         return $this->endMonth;
     }
+    public function getStep()
+    {
+        return $this->step;
+    }
 
     // сеттеры, для изменения состояния объекта
 
-    private function setId($id)
+    private function setId($value)
     {
-         $this->id=$id;
+         $this->id=$value;
     }
 
-    private function setGroupName($groupName)
+    private function setGroupName($value)
     {
-         $this->groupName=$groupName;
+         $this->groupName=$value;
     }
-    private function setBeginYear($beginYear)
+    private function setBeginYear($value)
     {
-         $this->beginYear=$beginYear;
+         $this->beginYear=$value;
     }
-    private function setEndYear($endYear)
+    private function setEndYear($value)
     {
-         $this->endYear=$endYear;
+         $this->endYear=$value;
     }
-    private function setBeginMonth($beginMonth)
+    private function setBeginMonth($value)
     {
-         $this->beginMonth=$beginMonth;
+         $this->beginMonth=$value;
     }
-    private function setEndMonth($endMonth)
+    private function setEndMonth($value)
     {
-         $this->endMonth=$endMonth;
+         $this->endMonth=$value;
     }
-    private function setAbbreviation($abbreviation)
+    private function setAbbreviation($value)
     {
-         $this->abbreviation=$abbreviation;
+         $this->abbreviation=$value;
+    }
+    public function setStep()
+    {
+        $year=date("Y");
+        $month=date("n");
+        $beginYear=(int)$this->getBeginYear();
+        $endYear=(int)$this->getEndYear();
+
+        if($beginYear<=$year AND $endYear>=$year){
+            if($beginYear != $year){
+                $step=(int)$year-(int)$beginYear;
+            }else{
+                $step=(int)$year-(int)$beginYear+1;
+            }
+            $this->step=$step;
+        }
     }
 
 }
-?>

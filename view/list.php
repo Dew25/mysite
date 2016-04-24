@@ -1,7 +1,6 @@
 <?php ob_start(); ?>
-<?php 
-	$link='
-		<link rel="stylesheet" href="/mysite/css/list.css">'  		 
+<?php
+	$link='<link rel="stylesheet" href="/mysite/css/list.css">'
  ?>
 <div class="container">
 	<h3>Список всех записей в таблице</h3>

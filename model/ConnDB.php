@@ -1,26 +1,32 @@
 <?php
 //класс подключения к базе данных
 // возвращает дескриптор базы (ключ)
-class ConnDB {
+class ConnDB{
+
+    private static $instance = null;
+
     private static $dbh = null;
-    private function ConnDB(){
-        require config.php;
+
+    private function __construct(){
+        require "config.php";
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
         $opt = array(
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         );
-        self::$dbh = new PDO($dsn, $user, $pass, $opt);
+        try {
+            self::$dbh = new PDO($dsn, $user, $pass, $opt);
+        } catch (Exception $e) {
+            echo "Нет подключения к базе!";
+        }
     }
 
-    static public function getDbh(){
+    public static function getDbh(){
         if(is_null(self::$dbh)){
-            self::$dbh=new self();
+            self::$instance= new self;
         }
         return self::$dbh;
     }
     protected function __clone(){}
-    public function import() {}
-}
 
-?>
+}

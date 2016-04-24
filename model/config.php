@@ -1,9 +1,7 @@
 <?php
 //переменные для подключения к базе
-$user="kurator";
-$db="kurator";
-$pass="kurator";
+$user="mysite";
+$db="mysite";
+$pass="mysite";
 $host="localhost";
 $charset="UTF8";
-
-?>

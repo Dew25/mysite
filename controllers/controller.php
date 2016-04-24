@@ -10,7 +10,7 @@ function render_template($path, array $args)
 
 function list_action()
 {
-	$rows=get_all_rows();	
+	$rows=get_all_rows();
 	$html=render_template("view/list.php",array('rows'=>$rows));
 	return $html;
 }
