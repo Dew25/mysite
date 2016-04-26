@@ -2,20 +2,36 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+    //функция автозагрузки классов по требованию
+    function myLoader($class_name){
 
-    include "controllers/controller.php";
-    include "controllers/GroupController.php";
-    include "model/repository/RepositoryGroup.php";
-    include "model/ConnDB.php";
-    include "model/Group.php";
-    include "model/config.php";
-    include "model/model.php";
+        $myDirs=array(  'controller/',
+                        'model/entity/',
+                        'model/repository/',
+                        'model/',
+                        'route/',
+                        'view/',
+                        'utils/'
+                    );
+        foreach($myDirs as $directory)
+        {
+            if(file_exists($directory.$class_name .'.php'))
+            {
+                require_once($directory.$class_name .'.php');
+                return;
+            }
+        }
+    }
+    //регистрация автозагрузчика
+    spl_autoload_register('myLoader');
 
-    $uri=$_SERVER['REQUEST_URI'];
-    $s = explode('?', $_SERVER['REQUEST_URI']);
+    $filter=new Filter();
+
+    $uri=$filter->filterGetUri();
+    $s = explode('?', $uri);
     $uri = $s[0];
     $uri=rtrim($uri,'/');
-    $uriPrfix='/mysite/index.php';
+    $uriPrefix='/mysite/index.php';
 
     //echo "uri=$uri";
     // if('/mysite/index.php' == $uri || '/mysite'==$uri){
@@ -34,14 +50,24 @@ ini_set('display_errors', 1);
     //     $response=edit_action($_REQUEST['id']);
     // }
 $groupController=new GroupController();
+$studentController=new StudentController();
+
 switch ($uri) {
-    case $uriPrfix.'':
+    case $uriPrefix.'':
         $response=$groupController->getAllGroups_action();
         break;
-    case $uriPrfix.'/showgroup':
-        $response=$groupController->getGroup_action($_REQUEST['id']);
+    case $uriPrefix.'/showgroup':
+        $response=$groupController->getGroup_action($filter->filterId());
         break;
-
+    case $uriPrefix.'/addgroup':
+        $response=$groupController->addGroup_action();
+        break;
+    case $uriPrefix.'/insertgroup':
+        $response=$groupController->insertGroup_action($filter->filterInsertGroup());
+        break;
+    case $uriPrefix.'/showstudent':
+        $response=$studentController->showStudent_action($filter->filterId());
+        break;
 }
 
     if(isset($response)){
