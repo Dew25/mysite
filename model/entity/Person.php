@@ -1,7 +1,7 @@
 <?php
 class Person{
-    private $id=1;
-    private $name="Juri";
+    private $id;
+    private $name;
     private $surname;
     private $code;
     private $eban;
