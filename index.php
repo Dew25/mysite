@@ -11,7 +11,8 @@ ini_set('display_errors', 1);
                         'model/',
                         'route/',
                         'view/',
-                        'utils/'
+                        'utils/',
+                        'security/'
                     );
         foreach($myDirs as $directory)
         {
