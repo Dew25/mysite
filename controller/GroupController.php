@@ -1,28 +1,8 @@
 <?php
 
-class GroupController{
+class GroupController extends Controller{
 
-    private $renderTemplate;
 
-    public function __construct(){
-        $this->renderTemplate=new RenderTemplate();
-    }
-    /**
-     * метод, который оборачивает данные в html
-     * @param String $path - путь к шаблону html
-     * @param mix $data - объект или массив с данными, которые будут доступны в шаблоне.
-     * @return строка содержащая данные, обернутые в html
-     */
-    private function renderTemplate($path, $data = null)
-    {
-        // echo "<pre>";
-        // var_dump($data);
-        // echo "</pre>";
-        ob_start();
-        require $path;
-        $html=ob_get_clean();
-        return $html;
-    }
     /**
      * Добывает список активных групп и оборачивает его в html
      * @return string  ответ сервера клиенту (браузеру)
@@ -30,7 +10,7 @@ class GroupController{
     public function getAllGroups_action(){
         $groupRepository=new GroupRepository();
         $listAllGroups=$groupRepository->listAllGroups();
-        $response=$this->renderTemplate->render("view/listGroups.php", array('list'=>$listAllGroups));
+        $response=$this->render("view/listGroups.php", array('list'=>$listAllGroups));
         return $response;
     }
     /**
@@ -42,7 +22,7 @@ class GroupController{
         $group=new Group($id,'READ');
         $studentRepository=new StudentRepository();
         $students=$studentRepository->getStudentsByGroup($id);
-        $response=$this->renderTemplate->render("view/showGroup.php", array('group'=>$group,'students'=>$students));
+        $response=$this->render("view/showGroup.php", array('group'=>$group,'students'=>$students));
         return $response;
     }
     /**
@@ -51,13 +31,12 @@ class GroupController{
      * (проследите последовательность полей согласно их расположению втаблице)
      */
     public function insertGroup_action($args){
-        $group=new Group($args,"INSERT");
+        new Group($args,"INSERT");
         return $this->getAllGroups_action();
     }
 
     public function addGroup_action(){
-        $person = new Person('1','READ');
-        $response=$this->renderTemplate->render("view/addGroup.php");
+        $response=$this->render("view/addGroup.php");
         return $response;
     }
 

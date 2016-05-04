@@ -22,5 +22,13 @@ class Filter{
     {
         return filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING);
     }
+    public function filterLogin()
+    {
+        $args = array(
+            'login'   => FILTER_SANITIZE_STRING,
+            'pass'    => FILTER_SANITIZE_STRING,
+        );
+        return filter_input_array(INPUT_POST,$args);
+    }
 
 }

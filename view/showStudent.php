@@ -3,7 +3,7 @@
     $link='<link rel="stylesheet" href="/mysite/css/show.css">';
  ?>
 <div class="container">
-    <h2>Cведения о студенте: <?php echo $data['student']->getPerson()->getName().' '.$data['student']->getPerson()->getSurname();?></h2>
+    <h2>Cведения о студенте: <br><?php echo $data['student']->getPerson()->getName().' '.$data['student']->getPerson()->getSurname();?></h2>
     <div class="well well-sm">id: <?php echo $data['student']->getId()." <br>Registry: ".$data['student']->getRegistry()."<br>Группа:".$data['student']->getGroup()->getAbbreviation()."<br>Курс:".$data['student']->getGroup()->getCourse(); ?></div>
     <div class="well well-sm">Начало обучения: <?php echo $data['student']->getGroup()->getBeginMonth().".".$data['student']->getGroup()->getBeginYear();?></div>
     <div class="well well-sm">Окончание: <?php echo $data['student']->getGroup()->getEndMonth() .".". $data['student']->getGroup()->getEndYear();?></div>
