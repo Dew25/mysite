@@ -1,7 +1,7 @@
 <?php
 class UserLoginRepository{
 
-    public function getUserData($login)
+    public function getUserData($args)
     {
         $sql="SELECT `id`, `login`, `pass`, `role`, `date` FROM `user` WHERE `login`=?";
         $dbh = ConnDB::getDbh();

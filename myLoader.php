@@ -10,6 +10,7 @@
                         'view/',
                         'utils/',
                         'app/',
+                        'app/auth/'
                     );
         foreach($myDirs as $directory)
         {

@@ -1,39 +1,56 @@
 <?php
 class User{
-    private $uid;
+    private $id;
     private $login;
     private $pass;
     private $role='ROLE_GUEST';
     private $date;
 
-    public function __construct($uid=null){
-        if($uid != null){
-            $repo=new UserRepository($uid);
-            $userData=$repo->loadUserData($uid);
-            $this->_setUid($userData['id']);
-            $this->_setLogin($userData['login']);
-            $this->_setPass($userData['pass']);
-            $this->_setUid($userData['id']);
-            $this->_setRole($userData['role']);
-            $this->_setDate($userData['date']);
+    public function __construct(array $args=null,$flag=''){
 
-        }else{
-            echo "<br>User создан с ролью ROLE_GUEST<br>";
+        $repo=new UserRepository($args);
+        switch ($flag){
+            case 'ID':{
+                $user=$repo->readUserById($args);
+                $this->_setId($user["id"]);
+                $this->_setLogin($user["login"]);
+                $this->_setPass($user["pass"]);
+                $this->_setRole($user["role"]);
+                $this->_setDate($user["date"]);
+                break;
+            }
+            case 'LOGIN':{
+                $user=$repo->readUserByLogin($args);
+                $this->_setId($user["id"]);
+                $this->_setLogin($user["login"]);
+                $this->_setPass($user["pass"]);
+                $this->_setRole($user["role"]);
+                $this->_setDate($user["date"]);
+                break;
+            }
+            case 'INSERT':{
+                $this->_setId($repo->insertUser($args));
+                break;
+            }
+            case 'UPDATE':{
+                $repo->updateUser($args);
+                break;
+            }
+            case 'DELETE':{
+                $repo->deleteUser($args);
+                break;
+            }
         }
-
     }
-
-
-
 
     /**
      * Gets the value of uid.
      *
      * @return mixed
      */
-    public function getUid()
+    public function getId()
     {
-        return $this->uid;
+        return $this->id;
     }
 
     /**
@@ -43,9 +60,12 @@ class User{
      *
      * @return self
      */
-    private function _setUid($uid)
+    private function _setId($id)
     {
-        $this->uid = $uid;
+        $this->id = $id;
+        session_start();
+        $_SESSION[Authentication::SESSION_ID]=$id;
+        $_SESSION['ip']=$this->_getServerIp();
 
         return $this;
     }
@@ -144,5 +164,24 @@ class User{
         $this->date = $date;
 
         return $this;
+    }
+
+    private function _getServerIp(){
+        if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"),"unknown"))
+        $ip = getenv("HTTP_CLIENT_IP");
+
+        elseif (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
+        $ip = getenv("HTTP_X_FORWARDED_FOR");
+
+        elseif (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
+        $ip = getenv("REMOTE_ADDR");
+
+        elseif (!empty($_SERVER['REMOTE_ADDR']) && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
+        $ip = $_SERVER['REMOTE_ADDR'];
+
+        else
+        $ip = "unknown";
+
+        return($ip);
     }
 }

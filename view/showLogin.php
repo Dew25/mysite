@@ -16,7 +16,7 @@
           <input type="text" class="form-control" id="_pass" name="pass" placeholder="Пароль">
         </div>
         <button type="reset" class="btn btn-default">Очистить</button>
-        <button type="submit" name="auth" class="btn btn-default">Авторизоваться</button>
+        <button type="submit" name="auth" value='submit' class="btn btn-default">Авторизоваться</button>
     </form>
 </div>
 

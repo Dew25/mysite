@@ -1,7 +1,7 @@
 <?php
 class Controller{
 
-    private $sessionId='user';
+    const SESSION_ID='userId';
     private $user; //object
 
 
@@ -9,7 +9,7 @@ class Controller{
         // if(isset( $_SESSION )){
         //     session_start();
         // }
-        echo "<br>Конструктор Controller()";
+        echo '<br>Конструктор Controller()';
     }
 
 

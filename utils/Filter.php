@@ -22,7 +22,7 @@ class Filter{
     {
         return filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING);
     }
-    public function filterLogin()
+    public function filterLoginPass()
     {
         $args = array(
             'login'   => FILTER_SANITIZE_STRING,
