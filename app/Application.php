@@ -12,18 +12,19 @@ class Application{
 
             //аутентификация:
         echo "<br>authentication:";
-            $authentication=new Authentication();
-            var_dump($authentication);
-            if(!$authentication->getAuth()){
-                $authentication->loginForm();
-                $route=new Route();
-                $response=$route->response();
+        $authentication=new Authentication();
+        var_dump($authentication);
+        if($authentication->getAuth()){
+            $route=new Route();
+            $response=$route->response();
+
+            if(isset($response)){
+                echo $response;
+            }else{
+                echo "Ошибка";
             }
-        if(isset($response)){
-            echo $response;
-        }else{
-            echo "Ошибка";
         }
+
     }
 
 

@@ -16,10 +16,10 @@ class AccessController extends Controller{
 
         $user=new User($args,'LOGIN');
         echo "AccessController:checkLogin_action:user".var_dump($user);
-        if(is_null($user)){
-            $this->showLogin_action();
+        if(isset($user) && !is_null($user->getId())){
+            return true;
         }
-        return true;
+        return false;
     }
 
 
