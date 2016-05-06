@@ -13,10 +13,12 @@ class Authentication{
         //Проверяем залогиненного пользователя
         //если нету сессии с идентификатором 'userId',
         //то запускаем на форму логина.
+        if(isset($_COOKIE[self::SESSION_ID])){
+            session_start();
+        }
        if(!$this->isSession()){
-            $auth=$this->loginForm();
+            return $auth=$this->loginForm();
             var_dump($_SESSION);
-
        }
     }
 
