@@ -35,4 +35,15 @@ class CityRepository{
         $stmt=$dbh->prepare($sql);
         $stmt->execute(["$id"]);
     }
+
+     public function listAllCities(){
+        $sql="SELECT `id`, `name` FROM `city` WHERE 1";
+        $dbh = ConnDB::getDbh();
+        $stmt=$dbh->query($sql);
+        while($row = $stmt->fetch()){
+            $rows[]=$row;
+        }
+
+        return $rows;
+    }
 }

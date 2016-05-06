@@ -18,7 +18,7 @@ class StudentRepository{
     }
 
     public function insertStudent($args){
-        $sql="INSERT INTO `student`(`registry`, `group_id`, `person_id`, `address_id`) VALUES (?,?,?,?,?,?)";
+        $sql="INSERT INTO `student`(`registry`, `group_id`, `person_id`, `address_id`) VALUES (?,?,?,?)";
         $stmt = ConnDB::getDbh()->prepare($sql);
         $stmt->execute(array_values($args));
 
@@ -41,6 +41,7 @@ class StudentRepository{
 
     public function getStudentsByGroup($groupId)
     {
+        $students=array();
         $sql="SELECT `id`, `registry`, `group_id`, `person_id`, `address_id` FROM `student` WHERE group_id=?";
         $dbh = ConnDB::getDbh();
         $stmt=$dbh->prepare($sql);

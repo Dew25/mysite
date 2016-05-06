@@ -1,4 +1,5 @@
 <?php
+
     $link='
         <link rel="stylesheet" href="/mysite/css/index.css">
         <script defer src="/mysite/js/addGroup.js"></script>';
@@ -10,8 +11,8 @@
         <div class="form-group" >
           <label for="_group_id">Группа:</label>
           <select class="form-control" id="_group_id" name="group_id">
-              <?php  foreach($data['rows'] as $row): ?>
-                <option value="<?php echo $row->getId(); ?>"><?php echo $row->getGroupName(); ?></option>
+              <?php  foreach($data['groups'] as $group): ?>
+                <option value="<?php echo $group->getId(); ?>"><?php echo $group->getGroupName(); ?></option>
               <?php endforeach ?>
           </select>
         </div>
@@ -26,6 +27,10 @@
         <div class="form-group" >
           <label for="_code">Личный код:</label>
           <input type="text" class="form-control" id="_code" name="code" placeholder="Личный код">
+        </div>
+        <div class="form-group" >
+          <label for="_registry">Код регистра:</label>
+          <input type="text" class="form-control" id="_registry" name="registry" placeholder="Код регистра">
         </div>
         <div class="form-group" >
           <label for="_eban">Банковский счет:</label>
@@ -49,11 +54,19 @@
           <input type="text" class="form-control" id="_room" name="room" placeholder="Квартира" value="">
         </div>
         <div class="form-group">
-          <label for="_city">Город:</label>
-          <input type="text" class="form-control" id="_city" name="city" placeholder="Город" value="">
+          <label for="_city_id">Город:</label>
+          <select class="form-control" id="_city_id" name="city_id">
+              <?php  foreach($data['cities'] as $city): ?>
+                <option value="<?php echo $city['id']; ?>"><?php echo $city['name']; ?></option>
+              <?php endforeach ?>
+          </select>
         </div><div class="form-group">
-          <label for="_country">Страна:</label>
-          <input type="text" class="form-control" id="_country" name="country" placeholder="Страна" value="">
+          <label for="_country_id">Страна:</label>
+          <select class="form-control" id="_country_id" name="country_id">
+              <?php  foreach($data['countries'] as $country): ?>
+                <option value="<?php echo $country['id']; ?>"><?php echo $country['name']; ?></option>
+              <?php endforeach ?>
+          </select>
         </div>
 
         <button type="reset" class="btn btn-default">Очистить</button>

@@ -18,7 +18,6 @@ class PersonRepository{
         $sql="INSERT INTO `person`(`name`, `surname`, `code`, `eban`, `bankname`) VALUES (?,?,?,?,?)";
         $stmt = ConnDB::getDbh()->prepare($sql);
         $stmt->execute(array_values($args));
-
         return ConnDB::getDbh()->lastInsertId();
     }
 
@@ -36,4 +35,9 @@ class PersonRepository{
         $stmt->execute(["$id"]);
     }
 
+public function addAddressToPerson($person_id,$address_id){
+        $sql="INSERT INTO `person_address`( `person_id`, `address_id`) VALUES (?,?)";
+        $stmt = ConnDB::getDbh()->prepare($sql);
+        $stmt->execute(array($person_id,$address_id));
+    }
 }

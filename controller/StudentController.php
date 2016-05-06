@@ -29,22 +29,35 @@ class StudentController{
             return $response;
         }
         public function addStudent_action(){
-           
-            $repo=new GroupRepository();
 
-            $rows=$repo->listAllGroups();
-            $response=$this->renderTemplate("view/addStudent.php", array('rows'=>$rows));
+            $groupRepository=new GroupRepository();
+            $groups=$groupRepository->listAllGroups();
+
+            $cityRepository=new CityRepository();
+            $cities=$cityRepository->listAllCities();
+
+            $countryRepository=new CountryRepository();
+            $countries=$countryRepository->listAllCountries();
+
+            $response=$this->renderTemplate("view/addStudent.php", array('groups'=>$groups,'cities'=>$cities,'countries'=>$countries));
             return $response;
         }
         public function insertStudent_action($args){
-           $country=new Country($args['country'],'INSERT');
-                $addCity=array($args['city'],$country->getId());
-           $city=new Sity($addCity,'INSERT');
-                $addAddress=array($args['street'],$args['house'],$args['room'],$sity->getId());
-           $address=new Address($addAddress,'INSERT');
-                $person=array($args[''])
-            $student=new Student($id,'READ');
-            $response=$this->renderTemplate("view/showStudent.php", array('student'=>$student));
+
+                $paramForAddress=array($args['street'],$args['house'],$args['room'],$args['city_id']);
+            $address=new Address($paramForAddress,'INSERT');
+                $paramForPerson=array($args['name'],$args['surname'],$args['code'],$args['eban'],$args['bankname']);
+            $person=new Person($paramForPerson,'INSERT');
+            //необходимо дабавить адресс персоне
+            $personRepository=new personRepository();
+            $personRepository->addAddressToPerson($person->getId(),$address->getId());
+                $paramForStudent=array($args['registry'],$args['group_id'],$person->getId(),$address->getId());
+            $student=new Student($paramForStudent,'INSERT');
+                $repo=new StudentRepository();
+            $students=$repo->getStudentsByGroup($args["group_id"]);
+            $group=new Group($args["group_id"],'READ');
+            $response=$this->renderTemplate("view/showGroup.php", array('group'=>$group,'students'=>$students));
+
             return $response;
         }
 

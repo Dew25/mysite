@@ -18,6 +18,7 @@ class AddressRepository{
     }
 
     public function insertAddress($args){
+
         $sql="INSERT INTO `address`(`street`, `house`, `room`, `city_id`) VALUES (?,?,?,?)";
         $stmt = ConnDB::getDbh()->prepare($sql);
         $stmt->execute(array_values($args));
