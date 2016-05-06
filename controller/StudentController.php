@@ -28,7 +28,25 @@ class StudentController{
             $response=$this->renderTemplate("view/showStudent.php", array('student'=>$student));
             return $response;
         }
+        public function addStudent_action(){
+           
+            $repo=new GroupRepository();
 
+            $rows=$repo->listAllGroups();
+            $response=$this->renderTemplate("view/addStudent.php", array('rows'=>$rows));
+            return $response;
+        }
+        public function insertStudent_action($args){
+           $country=new Country($args['country'],'INSERT');
+                $addCity=array($args['city'],$country->getId());
+           $city=new Sity($addCity,'INSERT');
+                $addAddress=array($args['street'],$args['house'],$args['room'],$sity->getId());
+           $address=new Address($addAddress,'INSERT');
+                $person=array($args[''])
+            $student=new Student($id,'READ');
+            $response=$this->renderTemplate("view/showStudent.php", array('student'=>$student));
+            return $response;
+        }
 
 
     }

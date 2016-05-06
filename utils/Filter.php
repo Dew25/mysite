@@ -17,6 +17,17 @@ class Filter{
         );
         return filter_input_array(INPUT_POST, $args);
     }
+     public function filterInsertStudent(){
+        $args = array(
+            'abbreviation'   => FILTER_SANITIZE_STRING,
+            'groupname'    => FILTER_SANITIZE_STRING,
+            'begin_year'     => FILTER_VALIDATE_INT,
+            'end_year' => FILTER_VALIDATE_INT,
+            'begin_month'   => FILTER_VALIDATE_INT,
+            'end_month'    => FILTER_VALIDATE_INT
+        );
+        return filter_input_array(INPUT_POST, $args);
+    }
 
     public function filterGetUri()
     {

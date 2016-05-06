@@ -8,7 +8,7 @@ class ConnDB{
     private static $dbh = null;
 
     private function __construct(){
-        require "config.php";
+        require "model/config.php";
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
         $opt = array(
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

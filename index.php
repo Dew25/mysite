@@ -68,6 +68,12 @@ switch ($uri) {
     case $uriPrefix.'/showstudent':
         $response=$studentController->showStudent_action($filter->filterId());
         break;
+    case $uriPrefix.'/addstudent':
+        $response=$studentController->addStudent_action();
+        break;
+    case $uriPrefix.'/insertstudent':
+        $response=$studentController->insertStudent_action($filter->filterInsertStudent());
+        break;
 }
 
     if(isset($response)){
