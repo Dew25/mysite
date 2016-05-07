@@ -70,7 +70,6 @@ class StudentRepository{
         $sql="UPDATE `student` SET `group_id`=? WHERE id=?";
         $dbh = ConnDB::getDbh();
         $stmt=$dbh->prepare($sql);
-     print_r($args);
         $stmt->execute(array_values($args));
     }
 }

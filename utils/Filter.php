@@ -1,7 +1,5 @@
 <?php
 class Filter{
-
-
     public function filterId(){
         return filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
     }

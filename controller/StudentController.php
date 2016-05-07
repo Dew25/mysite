@@ -11,9 +11,9 @@ class StudentController{
          * @return строка содержащая данные, обернутые в html
          */
         private function renderTemplate($path, $data = null){
-            echo "<pre>";
-            var_dump($data);
-            echo "</pre>";
+            // echo "<pre>";
+            // var_dump($data);
+            // echo "</pre>";
             ob_start();
             require $path;
             $html=ob_get_clean();
@@ -64,14 +64,12 @@ class StudentController{
             return $response;
         }
         public function addStudentToGroup_action($args){
-            echo "<pre>";
-            var_dump($args);
-            echo "</pre>";
             $studentRepository=new StudentRepository();
             $studentRepository->addStudentToGroup($args);
             $students=$studentRepository->getStudentsByGroup($args["group_id"]);
             $group=new Group($args["group_id"],'READ');
             $response=$this->renderTemplate("view/showGroup.php", array('group'=>$group,'students'=>$students));
+
             return $response;
         }
 
