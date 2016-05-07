@@ -11,9 +11,9 @@ class StudentController{
          * @return строка содержащая данные, обернутые в html
          */
         private function renderTemplate($path, $data = null){
-            // echo "<pre>";
-            // var_dump($data);
-            // echo "</pre>";
+            echo "<pre>";
+            var_dump($data);
+            echo "</pre>";
             ob_start();
             require $path;
             $html=ob_get_clean();
@@ -48,10 +48,7 @@ class StudentController{
             $address=new Address($paramForAddress,'INSERT');
                 $paramForPerson=array($args['name'],$args['surname'],$args['code'],$args['eban'],$args['bankname']);
             $person=new Person($paramForPerson,'INSERT');
-            //необходимо дабавить адресс персоне
-            $personRepository=new personRepository();
-            $personRepository->addAddressToPerson($person->getId(),$address->getId());
-                $paramForStudent=array($args['registry'],$args['group_id'],$person->getId(),$address->getId());
+                 $paramForStudent=array($args['registry'],$args['group_id'],$person->getId(),$address->getId());
             $student=new Student($paramForStudent,'INSERT');
                 $repo=new StudentRepository();
             $students=$repo->getStudentsByGroup($args["group_id"]);
@@ -60,6 +57,22 @@ class StudentController{
 
             return $response;
         }
-
+        public function listExistsStudents_action($group_id){
+            $StudentRepository=new StudentRepository();
+            $students=$StudentRepository->listExistsStudents();
+            $response=$this->renderTemplate("view/listExistsStudents.php", array('students'=>$students,'group_id'=>$group_id));
+            return $response;
+        }
+        public function addStudentToGroup_action($args){
+            echo "<pre>";
+            var_dump($args);
+            echo "</pre>";
+            $studentRepository=new StudentRepository();
+            $studentRepository->addStudentToGroup($args);
+            $students=$studentRepository->getStudentsByGroup($args["group_id"]);
+            $group=new Group($args["group_id"],'READ');
+            $response=$this->renderTemplate("view/showGroup.php", array('group'=>$group,'students'=>$students));
+            return $response;
+        }
 
     }

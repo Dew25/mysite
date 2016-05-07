@@ -6,7 +6,7 @@
  ?>
 <?php ob_start(); ?>
 <div class="container">
-    <h3>Добавление ученика</h3>
+    <h3>Добавление нового ученика</h3>
     <form role="form" action="/mysite/index.php/insertstudent" method="POST" onsubmit="return validate()">
         <div class="form-group" >
           <label for="_group_id">Группа:</label>

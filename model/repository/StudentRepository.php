@@ -54,4 +54,23 @@ class StudentRepository{
 // echo "</pre>";
         return $students;
     }
+    public function listExistsStudents(){
+        $sql="SELECT `person_id` FROM `student` WHERE 1";
+        $dbh = ConnDB::getDbh();
+        $stmt=$dbh->prepare($sql);
+        $stmt->execute([]);
+        $persons=array();
+        while($row = $stmt->fetch()){
+            $persons[]= new Person($row['person_id'],'READ');
+        }
+
+        return $persons;
+    }
+    public function addStudentToGroup($args){
+        $sql="UPDATE `student` SET `group_id`=? WHERE id=?";
+        $dbh = ConnDB::getDbh();
+        $stmt=$dbh->prepare($sql);
+     print_r($args);
+        $stmt->execute(array_values($args));
+    }
 }

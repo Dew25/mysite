@@ -43,5 +43,4 @@ class GroupRepository{
         }
         return $groupList;
     }
-
 }
