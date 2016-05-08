@@ -6,10 +6,10 @@ ob_start();?>
 <div class="container">
 	<h3>Список всех учеников</h3>
 		<ol>
-			<?php foreach($data['students'] as $student): ?>
+			<?php foreach($data['persons'] as $person): ?>
 				<li class="well well-sm">
-					<a href="/mysite/index.php/addstudenttogroup?student_id=<?php echo $student->getId();?>&group_id=<?php echo $data['group_id']?>">
-						<?php echo $student->getName().' '.$student->getSurname(); ?>
+					<a href="/mysite/index.php/insertstudenttogroup?person_id=<?php echo $person->getId();?>&group_id=<?php echo $data['group_id']?>">
+						<?php echo $person->getName().' '.$person->getSurname(); ?>
 					</a>
 				</li>
 			<?php endforeach ?>

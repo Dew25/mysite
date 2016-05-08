@@ -37,11 +37,11 @@ class Filter{
     {
         return filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING);
     }
-    public function addStudentToGroup()
+    public function insertStudentToGroup()
     {
         $args = array(
             'group_id'  => FILTER_VALIDATE_INT,
-            'student_id'    => FILTER_VALIDATE_INT
+            'person_id'    => FILTER_VALIDATE_INT
         );
         return filter_input_array(INPUT_GET, $args);
     }

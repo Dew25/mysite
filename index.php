@@ -33,22 +33,7 @@ ini_set('display_errors', 1);
     $uri=rtrim($uri,'/');
     $uriPrefix='/mysite/index.php';
 
-    //echo "uri=$uri";
-    // if('/mysite/index.php' == $uri || '/mysite'==$uri){
-    //     $response=list_action();
-    // }elseif('/mysite/index.php/admin'==$uri){
-    //     $response=admin_action();
-    // }elseif('/mysite/index.php/add'==$uri){
-    //     $response=add_action();
-    // }elseif('/mysite/index.php/show'==$uri){
-    //     $response=show_action($_REQUEST['id']);
-    // }elseif('/mysite/index.php/delete'==$uri){
-    //     $response=delete_action($_REQUEST['id']);
-    // }elseif('/mysite/index.php/update'==$uri){
-    //     $response=update_action();
-    // }elseif('/mysite/index.php/edit'==$uri){
-    //     $response=edit_action($_REQUEST['id']);
-    // }
+
 $groupController=new GroupController();
 $studentController=new StudentController();
 
@@ -77,8 +62,8 @@ switch ($uri) {
     case $uriPrefix.'/addstudent':
         $response=$studentController->listExistsStudents_action($filter->filterId());
         break;
-    case $uriPrefix.'/addstudenttogroup':
-        $response=$studentController->addStudentToGroup_action($filter->addStudentToGroup());
+    case $uriPrefix.'/insertstudenttogroup':
+        $response=$studentController->insertStudentToGroup_action($filter->insertStudentToGroup());
         break;
 }
 

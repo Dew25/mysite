@@ -59,18 +59,20 @@ class StudentController{
         }
         public function listExistsStudents_action($group_id){
             $StudentRepository=new StudentRepository();
-            $students=$StudentRepository->listExistsStudents();
-            $response=$this->renderTemplate("view/listExistsStudents.php", array('students'=>$students,'group_id'=>$group_id));
+            $persons=$StudentRepository->listExistsStudents($group_id);
+            $response=$this->renderTemplate("view/listExistsStudents.php", array('persons'=>$persons,'group_id'=>$group_id));
             return $response;
         }
-        public function addStudentToGroup_action($args){
+        public function insertStudentToGroup_action($args){
             $studentRepository=new StudentRepository();
-            $studentRepository->addStudentToGroup($args);
+            $student=$studentRepository->getStudentByPersonId($args['person_id']);
+            $studentRepository->insertStudentToGroup([$args['group_id'],$student->getId()]);
             $students=$studentRepository->getStudentsByGroup($args["group_id"]);
             $group=new Group($args["group_id"],'READ');
             $response=$this->renderTemplate("view/showGroup.php", array('group'=>$group,'students'=>$students));
 
             return $response;
         }
+
 
     }
