@@ -20,6 +20,9 @@ class Address{
                 break;
             }
             case 'INSERT':{
+            // echo "<pre>";
+            // var_dump($args);
+            // echo "</pre>";
                 $this->_setId($repo->insertAddress($args));
                 break;
             }

@@ -43,7 +43,9 @@ class StudentController{
             return $response;
         }
         public function insertStudent_action($args){
-
+            // echo "<br>InsertStudent_action:<pre>";
+            // var_dump($args);
+            // echo "</pre>";
                 $paramForAddress=array($args['street'],$args['house'],$args['room'],$args['city_id']);
             $address=new Address($paramForAddress,'INSERT');
                 $paramForPerson=array($args['name'],$args['surname'],$args['code'],$args['eban'],$args['bankname']);

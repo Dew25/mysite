@@ -30,6 +30,7 @@ class Filter{
             'city_id'    => FILTER_VALIDATE_INT,
             'country_id'    => FILTER_VALIDATE_INT
         );
+
         return filter_input_array(INPUT_POST, $args);
     }
 
